@@ -86,7 +86,7 @@ function App(props) {
   const [selectedNetwork, setSelectedNetwork] = useState(networkOptions[0]);
   const location = useLocation();
 
-  const targetNetwork = NETWORKS[selectedNetwork];
+  const targetNetwork = NETWORKS.rinkeby;
 
   // 🔭 block explorer URL
   const blockExplorer = targetNetwork.blockExplorer;
@@ -371,6 +371,14 @@ function App(props) {
             contracts={readContracts}
             contractName="DEX"
             eventName="LiquidityRemoved"
+            localProvider={localProvider}
+            mainnetProvider={mainnetProvider}
+            startBlock={1}
+          />
+          <Events
+            contracts={readContracts}
+            contractName="Balloons"
+            eventName="Approval"
             localProvider={localProvider}
             mainnetProvider={mainnetProvider}
             startBlock={1}

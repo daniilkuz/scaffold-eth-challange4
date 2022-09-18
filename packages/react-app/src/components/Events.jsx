@@ -34,6 +34,8 @@ export default function Events({ contracts, contractName, eventName, localProvid
           ? "🎈-->⟠ Address | Trade | AmountOut | AmountIn"
           : eventName === "LiquidityProvided"
           ? "➕ Address | Liquidity Minted | Eth In | Balloons In"
+          : eventName === "Approval"
+          ? "Owner | Spender | Amount to spend"
           : "➖ Address | Liquidity Withdrawn | ETH out | Balloons Out "}
       </h2>
       <List
@@ -47,6 +49,15 @@ export default function Events({ contracts, contractName, eventName, localProvid
               </List.Item>
             );
           }
+          if (eventName === "Approval"){
+            return (
+              <List.Item key={item.blockNumber + "_" + item.args[0].toString()}>
+                <Address address={item.args[0]} ensProvider={mainnetProvider} fontSize={16} />
+                <Address address={item.args[1]} ensProvider={mainnetProvider} fontSize={16} />
+                <TokenBalance balance={item.args[2]} provider={localProvider} />
+              </List.Item>
+            )}
+          else{
           return (
             <List.Item key={item.blockNumber + "_" + item.args[0].toString()}>
               <Address address={item.args[0]} ensProvider={mainnetProvider} fontSize={16} />
@@ -58,7 +69,7 @@ export default function Events({ contracts, contractName, eventName, localProvid
               <TokenBalance balance={item.args[2]} provider={localProvider} />
               <TokenBalance balance={item.args[3]} provider={localProvider} />
             </List.Item>
-          );
+          )};
         }}
       />
     </div>
